@@ -1,10 +1,42 @@
 from routers import Shop, ShopEnv, HumanResource, HRDetails, OccupationalHealthCentre, OPD, IPD, MedicinePrescribed, PathologyTestResults
 from fastapi import FastAPI
+from fastapi.responses import JSONResponse
+from fastapi.requests import Request
 import os
 from dotenv import load_dotenv
+from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI()
-load_dotenv()
+load_dotenv(override=True)
+
+
+origins = [
+    "*",
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+
+@app.get("/")
+def read_root():
+    return {"message": "Hello World"}
+
+
+@app.middleware("http")
+async def add_process_time_header(request: Request, call_next):
+    if request.url.path not in ["/", "/docs", "/redoc", "/openapi.json"]:
+        apiKey = request.headers.get("apiKey")
+        if apiKey is None:
+            return JSONResponse(status_code=403, content={"message": "API Key is required"})
+        if apiKey != os.getenv("APIKEY"):
+            return JSONResponse(status_code=403, content={"message": "Invalid API Key"})
+    return await call_next(request)
 
 
 @app.get("/")
