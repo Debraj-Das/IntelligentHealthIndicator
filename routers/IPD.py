@@ -1,28 +1,30 @@
 from fastapi import APIRouter
+from DB.IPD import getIPD, addIPD, updateIPD, deleteIPD
+from models.IPD import IPD, IPDUpdate
 
 router = APIRouter()
 
 
-@router.get("/IPD")
-def IPD():
-    return {"message": "Welcome to the In-Patient Department!"}
-
-
-@router.get("/IPD/{id}")
-def read_IPD(id: int):
-    return {"item_id": id}
+@router.get("/IPD/{userid}")
+async def read_IPD(userid: int):
+    data = await getIPD(userid)
+    return {"data": data, "message": "IPD has been fetched!"}
 
 
 @router.post("/IPD")
-def create_IPD():
-    return {"message": "IPD has been created!"}
+async def create_IPD(newIPD: IPD):
+    data = await addIPD(newIPD)
+    return {"data": data, "message": "IPD has been created!"}
 
 
 @router.put("/IPD/{id}")
-def update_IPD(id: int):
-    return {"message": "IPD has been updated!"}
+async def update_IPD(id: int, updatedIPD: IPDUpdate):
+    updatedIPD.id = id
+    data = await updateIPD(updatedIPD)
+    return {"data": data, "message": "IPD has been updated!"}
 
 
 @router.delete("/IPD/{id}")
-def delete_IPD(id: int):
-    return {"message": "IPD has been deleted!"}
+async def delete_IPD(id: int):
+    data = await deleteIPD(id)
+    return {"data": data, "message": "IPD has been deleted!"}

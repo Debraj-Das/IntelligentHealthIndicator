@@ -1,5 +1,5 @@
 from DB.HIConnection import DBConnect, DBCommit
-from models.HumanResource import EmployeeDetails, EmployeeDetailsUpdate
+from models.HRDetails import EmployeeDetails, EmployeeDetailsUpdate
 
 db = DBConnect()
 

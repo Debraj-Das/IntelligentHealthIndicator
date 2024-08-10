@@ -1,13 +1,13 @@
 from fastapi import APIRouter
 from DB.HRDetails import getHRDetails, addHRDetails, updateHRDetails, deleteHRDetails
-from models.HumanResource import EmployeeDetails, EmployeeDetailsUpdate
+from models.HRDetails import EmployeeDetails, EmployeeDetailsUpdate
 
 router = APIRouter()
 
 
-@router.get("/HRDetails/{id}")
-async def get_hr_details(id: int):
-    userDetails = await getHRDetails(id)
+@router.get("/HRDetails/{userid}")
+async def get_hr_details(userid: int):
+    userDetails = await getHRDetails(userid)
     return {"data": userDetails, "message": "HR Details"}
 
 
@@ -19,6 +19,7 @@ async def add_hr_details(newHRDetails: EmployeeDetails):
 
 @router.put("/HRDetails/{id}")
 def update_hr_details(id: int, updatedHRDetails: EmployeeDetailsUpdate):
+    updatedHRDetails.id = id
     update_hr_detail = updateHRDetails(updatedHRDetails)
     return {"data": update_hr_detail, "message": "HR Details Updated"}
 

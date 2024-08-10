@@ -1,4 +1,4 @@
-from routers import Shop, HumanResource, HRDetails, OccupationalHealthCentre, OPD, IPD, MedicinePrescribed, PathologyTestResults
+from routers import Shop, ShopEnv, HumanResource, HRDetails, OccupationalHealthCentre, OPD, IPD, MedicinePrescribed, PathologyTestResults
 from fastapi import FastAPI
 import os
 from dotenv import load_dotenv
@@ -9,10 +9,11 @@ load_dotenv()
 
 @app.get("/")
 def root():
-    return {"message": "FastAPI is working perfectly"}
+    return {"message": "Health Indicator API Working Successfully"}
 
 
 app.include_router(Shop.router)
+app.include_router(ShopEnv.router)
 app.include_router(HumanResource.router)
 app.include_router(HRDetails.router)
 app.include_router(OccupationalHealthCentre.router)
