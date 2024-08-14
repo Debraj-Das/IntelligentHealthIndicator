@@ -28,15 +28,15 @@ def read_root():
     return {"message": "Hello World"}
 
 
-@app.middleware("http")
-async def add_process_time_header(request: Request, call_next):
-    if request.url.path not in ["/", "/docs", "/redoc", "/openapi.json"]:
-        apiKey = request.headers.get("apiKey")
-        if apiKey is None:
-            return JSONResponse(status_code=403, content={"message": "API Key is required"})
-        if apiKey != os.getenv("APIKEY"):
-            return JSONResponse(status_code=403, content={"message": "Invalid API Key"})
-    return await call_next(request)
+# @app.middleware("http")
+# async def add_process_time_header(request: Request, call_next):
+#     if request.url.path not in ["/", "/docs", "/redoc", "/openapi.json"]:
+#         apiKey = request.headers.get("apiKey")
+#         if apiKey is None:
+#             return JSONResponse(status_code=403, content={"message": "API Key is required"})
+#         if apiKey != os.getenv("APIKEY"):
+#             return JSONResponse(status_code=403, content={"message": "Invalid API Key"})
+#     return await call_next(request)
 
 
 @app.get("/")
@@ -53,10 +53,3 @@ app.include_router(OPD.router)
 app.include_router(IPD.router)
 app.include_router(MedicinePrescribed.router)
 app.include_router(PathologyTestResults.router)
-
-
-if __name__ == "__main__":
-    import uvicorn
-    port = int(os.getenv("PORT", "8000"))
-    host = os.getenv("HOST", "127.0.0.1")
-    uvicorn.run(app, host=host, port=port)
