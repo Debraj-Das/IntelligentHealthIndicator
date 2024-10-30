@@ -2,7 +2,7 @@ from fastapi import FastAPI
 import os
 from dotenv import load_dotenv
 from fastapi.middleware.cors import CORSMiddleware
-from Routes import signin, signup, shop, shopEnv, opd, ohc, ipd, medicine, pathology, workDetails
+from Routes import signin, user, shop, opd, ohc, ipd, medicine, pathology
 
 app = FastAPI()
 load_dotenv(override=True)
@@ -22,12 +22,10 @@ def root():
 
 
 app.include_router(signin.router)
-app.include_router(signup.router)
+app.include_router(user.router)
 app.include_router(shop.router)
-app.include_router(shopEnv.router)
 app.include_router(opd.router)
 app.include_router(ohc.router)
 app.include_router(ipd.router)
 app.include_router(medicine.router)
 app.include_router(pathology.router)
-app.include_router(workDetails.router)

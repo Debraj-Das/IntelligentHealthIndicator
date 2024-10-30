@@ -6,3 +6,11 @@ class Pathology(BaseModel):
     date: str
     test: str
     result: str
+
+    def to_dict(self):
+        return {
+            "userid": self.userid,
+            "date": self.date,
+            "test": self.test,
+            "result": self.result
+        }
