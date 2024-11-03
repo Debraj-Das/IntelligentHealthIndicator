@@ -1,16 +1,18 @@
-from pydantic import BaseModel, ConfigDict
+from pydantic import BaseModel
 
 
 class Medicine(BaseModel):
-    userid: int
+    userid: str
     date: str
     doctor: str
-    medicine: str
+    medicine: str = ""
+    prescription_file: str = ""
 
     def to_dict(self):
         return {
             "userid": self.userid,
             "date": self.date,
             "doctor": self.doctor,
-            "medicine": self.medicine
+            "medicine": self.medicine,
+            "prescription_file": self.prescription_file
         }

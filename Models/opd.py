@@ -2,11 +2,12 @@ from pydantic import BaseModel
 
 
 class OPD(BaseModel):
-    userid: int
+    userid: str
     date: str
     doctor: str
-    prescription: str
-    status: int
+    prescription: str = ""
+    prescription_file: str = ""
+    status: str = ""
 
     def to_dict(self):
         return {
@@ -14,5 +15,6 @@ class OPD(BaseModel):
             "date": self.date,
             "doctor": self.doctor,
             "prescription": self.prescription,
+            "prescription_file": self.prescription_file,
             "status": self.status
         }

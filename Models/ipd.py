@@ -2,13 +2,14 @@ from pydantic import BaseModel
 
 
 class IPD(BaseModel):
-    userid: int
-    admit_no: int
+    userid: str
+    admit_no: str
     admission_date: str
     discharge_date: str
     doctor: str
-    prescription: str
-    status: int
+    prescription: str = ""
+    prescription_file: str = ""
+    status: str = ""
 
     def to_dict(self):
         return {
@@ -18,5 +19,6 @@ class IPD(BaseModel):
             "discharge_date": self.discharge_date,
             "doctor": self.doctor,
             "prescription": self.prescription,
+            "prescription_file": self.prescription_file,
             "status": self.status
         }

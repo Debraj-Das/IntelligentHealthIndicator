@@ -13,7 +13,7 @@ class Shop(BaseModel):
 
 
 class ShopEnv(BaseModel):
-    shopid: int
+    shopid: str
     date: str
     temperature: float
     co2_level: float

@@ -21,11 +21,12 @@ class User(BaseModel):
 
 
 class WorkDetails(BaseModel):
-    userid: int
-    shopid: int
+    userid: str
+    shopid: str
     shift: str
     grade: str
     joining_shop: str
+    distance_from_residence: str
 
     def to_dict(self):
         return {
@@ -33,5 +34,6 @@ class WorkDetails(BaseModel):
             "shopid": self.shopid,
             "shift": self.shift,
             "grade": self.grade,
-            "joining_shop": self.joining_shop
+            "joining_shop": self.joining_shop,
+            "distance_from_residence": self.distance_from_residence
         }
