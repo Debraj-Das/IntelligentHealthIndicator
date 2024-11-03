@@ -21,4 +21,4 @@ def signin(user: SigninUser):
     if user_data["password"] != user.password:
         return {"message": "Invalid password"}
 
-    return {"message": "User signed in successfully", "role": user_data["role"]}
+    return {"user": user_data}
