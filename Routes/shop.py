@@ -17,9 +17,6 @@ async def get_shop(shop_id: str):
     return get_info(shop_id)
 
 
-router = APIRouter()
-
-
 @router.post("/shopenv")
 async def post_shop_env(shop_env: ShopEnv):
     if not add_env(shop_env):
@@ -29,4 +26,4 @@ async def post_shop_env(shop_env: ShopEnv):
 
 @router.get("/shopenv/{shopid}")
 async def get_shop_env(shopid: str):
-    return shop_details(shopid)
+    return {"data": shop_details(shopid)}

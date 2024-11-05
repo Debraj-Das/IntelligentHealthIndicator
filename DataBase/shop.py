@@ -18,7 +18,11 @@ def add_info(data: Shop):
 
 
 def get_info(shopid: str):
-    return info.find_one({"shopid": shopid})
+    data = info.find_one({"shopid": shopid})
+    if data == None:
+        return None
+    data.pop("_id")
+    return {"shop": data}
 
 
 def add_env(data: ShopEnv):
@@ -29,8 +33,9 @@ def add_env(data: ShopEnv):
 
 
 def shop_details(shopid: str):
-    shop = get_info(shopid)
-    if (shop == None):
-        return None
-    shop_env = env.find({"shopid": shopid})
-    return {"shop": shop, "env": shop_env}
+    shop_env_data = env.find({"shopid": shopid})
+    shop_env = []
+    for i in shop_env_data:
+        i.pop("_id")
+        shop_env.append(i)
+    return {"env": shop_env}

@@ -1,3 +1,4 @@
+from Routes import analytics
 from Routes import mail
 from Routes import upload
 from fastapi import FastAPI
@@ -38,3 +39,6 @@ app.include_router(mail.router)
 
 
 app.include_router(upload.router)
+
+
+app.include_router(analytics.router)

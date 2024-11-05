@@ -6,11 +6,13 @@ client = pymongo.MongoClient(os.getenv("MONGO_URI"))
 
 opd = client['opd']
 
+opd_collection = opd['opd']
+
 
 def add_opd(data: OPD):
-    opd.insert_one(data.to_dict())
+    opd_collection.insert_one(data.to_dict())
     return True
 
 
 def get_opd(userid: str):
-    return opd.find_one({"userid": userid})
+    return opd_collection.find({"userid": userid})

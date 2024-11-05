@@ -1,22 +1,11 @@
 from fastapi import APIRouter
 from Models.pathology import Pathology
 from DataBase.pathology import add_pathology, get_pathology
-from fastapi import File, UploadFile, Form
-from typing import Optional
 import smtplib
 import os
 from DataBase.user import get_user
 
 router = APIRouter()
-
-
-"""
-    userid: str
-    date: str
-    test: str
-    result: str = ""
-    result_file: str = ""
-"""
 
 
 def send_Notification(userid):
@@ -46,29 +35,14 @@ def send_Notification(userid):
 
 
 @router.post("/pathology")
-async def create_pathology(
-    userid: str = Form(...),
-    date: str = Form(...),
-    test: str = Form(...),
-    result: str = Form(""),
-    result_file: Optional[UploadFile] = File(None),
-):
-
-    if result_file is None:
-        result_file_name = ""
-    else:
-        result_file_name = f"static/{result_file.filename}"
-
-    pathology = Pathology(userid=userid, date=date, test=test, result=result,
-                          result_file=result_file_name)
+async def create_pathology(pathology: Pathology):
 
     if not add_pathology(pathology):
         return {"message": "User not exists"}
 
-    if result_file:
-        file_location = f"static/{result_file.filename}"
-        with open(file_location, "wb+") as file_object:
-            file_object.write(result_file.file.read())
+    result = pathology.result
+
+    userid = get_user(pathology.userid)
 
     if len(result) > 4 and result[:4] == "High":
         send_Notification(userid)
@@ -77,5 +51,10 @@ async def create_pathology(
 
 
 @router.get("/pathology/{userid}")
-async def get_pathology(userid: str):
-    return get_pathology(userid)
+async def Get_pathology(userid: str):
+    pathology = get_pathology(userid)
+    data = []
+    for i in pathology:
+        i.pop("_id")
+        data.append(i)
+    return {"data": data}
