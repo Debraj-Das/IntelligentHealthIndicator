@@ -5,6 +5,6 @@ router = APIRouter()
 
 
 @router.get("/analytics")
-async def analysis(useid: str, starting_date: str, ending_date: str):
+async def analysis(userid: str, starting_date: str, ending_date: str):
 
-    return user_infomation_analytics(useid, starting_date, ending_date)
+    return user_infomation_analytics(userid, starting_date, ending_date)
