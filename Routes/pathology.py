@@ -25,6 +25,8 @@ def send_Notification(userid):
 
     message = f"Subject: Abnormal Health Parameter\n\n{user['name']},\n\nYour recent pathology test results show some abnormal health parameters. Please consult a doctor for further diagnosis and treatment."
 
+    print(sender, email, message)
+
     with smtplib.SMTP("smtp.gmail.com", 587) as server:
         server.starttls()
         server.login(sender, password)
@@ -42,10 +44,8 @@ async def create_pathology(pathology: Pathology):
 
     result = pathology.result
 
-    userid = get_user(pathology.userid)
-
-    if len(result) > 4 and result[:4] == "High":
-        send_Notification(userid)
+    if len(result) >= 4 and result[:4] == "High":
+        send_Notification(pathology.userid)
 
     return {"message": "Pathology created successfully"}
 
