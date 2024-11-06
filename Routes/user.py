@@ -22,7 +22,7 @@ async def Get_user(userid: str):
 
     result.pop("_id")
 
-    return result
+    return {"information": result}
 
 
 @router.post("/workDetails")

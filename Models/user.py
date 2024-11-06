@@ -8,6 +8,10 @@ class User(BaseModel):
     phone: str
     email: str
     role: str
+    shop: str
+    joining_date: str
+    dob: str
+    gender: str
 
     def to_dict(self):
         return {
@@ -16,7 +20,11 @@ class User(BaseModel):
             "password": self.password,
             "phone": self.phone,
             "email": self.email,
-            "role": self.role
+            "role": self.role,
+            "shop": self.shop,
+            "joining_date": self.joining_date,
+            "dob": self.dob,
+            "gender": self.gender
         }
 
 
