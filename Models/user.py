@@ -25,7 +25,7 @@ class WorkDetails(BaseModel):
     shopid: str
     shift: str
     grade: str
-    joining_shop: str
+    joining_date: str
     distance_from_residence: str
 
     def to_dict(self):
@@ -34,6 +34,6 @@ class WorkDetails(BaseModel):
             "shopid": self.shopid,
             "shift": self.shift,
             "grade": self.grade,
-            "joining_shop": self.joining_shop,
+            "joining_date": self.joining_date,
             "distance_from_residence": self.distance_from_residence
         }
